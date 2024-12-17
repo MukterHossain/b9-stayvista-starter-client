@@ -1,5 +1,6 @@
 import {
-  createBrowserRouter,} from "react-router-dom";
+  createBrowserRouter,
+} from "react-router-dom";
 import Main from "../layouts/Main";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -13,6 +14,8 @@ import AddRoom from "../pages/Dashboard/Host/AddRoom";
 import MyListings from "../pages/Dashboard/Host/MyListings";
 import Profile from "../pages/Dashboard/Common/Profile";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import HostRoute from "./HostRoute";
 
 export const router = createBrowserRouter([
   {
@@ -31,45 +34,51 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path:'/login',
+    path: '/login',
     element: <Login></Login>
   },
   {
-    path:'/signup',
+    path: '/signup',
     element: <SignUp></SignUp>
   },
   {
-    path:'/dashboard',
+    path: '/dashboard',
     element: <PrivateRoute>
       <DashboardLayout></DashboardLayout>
     </PrivateRoute>,
     children: [
       {
-        index:true,
+        index: true,
         element: <PrivateRoute>
           <Statistics></Statistics>
         </PrivateRoute>
       },
       {
-        path:'add-room',
+        path: 'add-room',
         element: <PrivateRoute>
-          <AddRoom></AddRoom>
+          <HostRoute>
+            <AddRoom></AddRoom>
+          </HostRoute>
         </PrivateRoute>
       },
       {
-        path:'my-listings',
+        path: 'my-listings',
         element: <PrivateRoute>
-          <MyListings></MyListings>
+          <HostRoute>
+            <MyListings></MyListings>
+          </HostRoute>
         </PrivateRoute>
       },
       {
-        path:'manage-users',
+        path: 'manage-users',
         element: <PrivateRoute>
-          <ManageUsers></ManageUsers>
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
         </PrivateRoute>
       },
       {
-        path:'profile',
+        path: 'profile',
         element: <PrivateRoute>
           <Profile></Profile>
         </PrivateRoute>

@@ -2,14 +2,17 @@ import PropTypes from 'prop-types'
 import Button from '../Shared/Button/Button'
 import { useState } from 'react';
 import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; 
-import 'react-date-range/dist/theme/default.css'; 
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 import { differenceInCalendarDays } from 'date-fns';
+import BookingModal from '../Model/BookingModal';
 
 
 const RoomReservation = ({ room }) => {
-console.log('start date ', new Date(room.from).toLocaleDateString() );
-console.log('End date ', new Date(room.to).toLocaleDateString() );
+  const [isOpen, setIsOpen] = useState(false)
+  const closeModal = () => {
+    setIsOpen(false)
+  };
   const [state, setState] = useState([
     {
       startDate: new Date(room.from),
@@ -37,9 +40,9 @@ console.log('End date ', new Date(room.to).toLocaleDateString() );
         <hr />
         <div className='flex justify-center'>{/* Calender */}
           <DateRange
-          showDateDisplay={false}
-          rangeColors={['#F6536D']}
-            
+            showDateDisplay={false}
+            rangeColors={['#F6536D']}
+
             onChange={item => {
               console.log(item);
               setState([{
@@ -54,8 +57,10 @@ console.log('End date ', new Date(room.to).toLocaleDateString() );
         </div>
         <hr />
         <div className='p-4'>
-          <Button label={'Reserve'}></Button>
+          <Button onClick={()=>setIsOpen(true)} label={'Reserve'}></Button>
         </div>
+        {/* Modal bookingInfo={bookingInfo} refetch={refetch}*/}
+        <BookingModal isOpen={isOpen} closeModal={closeModal} ></BookingModal>
         <hr />
         <div className='p-4 flex items-center justify-between font-semibold text-lg'>
           <div>Total</div>
