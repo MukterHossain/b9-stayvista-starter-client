@@ -6,9 +6,11 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { differenceInCalendarDays } from 'date-fns';
 import BookingModal from '../Model/BookingModal';
+import useAuth from '../../hooks/useAuth';
 
 
 const RoomReservation = ({ room }) => {
+  const {user} = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const closeModal = () => {
     setIsOpen(false)
@@ -59,8 +61,8 @@ const RoomReservation = ({ room }) => {
         <div className='p-4'>
           <Button onClick={()=>setIsOpen(true)} label={'Reserve'}></Button>
         </div>
-        {/* Modal bookingInfo={bookingInfo} refetch={refetch}*/}
-        <BookingModal isOpen={isOpen} closeModal={closeModal} ></BookingModal>
+        {/* Modal  refetch={refetch}*/}
+        <BookingModal isOpen={isOpen} closeModal={closeModal} bookingInfo={{...room, price:totalPrice, guest:{name:user?.displayName}}}></BookingModal>
         <hr />
         <div className='p-4 flex items-center justify-between font-semibold text-lg'>
           <div>Total</div>

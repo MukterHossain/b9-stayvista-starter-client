@@ -1,6 +1,4 @@
-import {
-  createBrowserRouter,
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Main from "../layouts/Main";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -16,6 +14,8 @@ import Profile from "../pages/Dashboard/Common/Profile";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AdminRoute from "./AdminRoute";
 import HostRoute from "./HostRoute";
+import MyBookings from "../pages/Dashboard/Guest/MyBookings";
+import ManageBookings from "../pages/Dashboard/Host/ManageBookings";
 
 export const router = createBrowserRouter([
   {
@@ -24,65 +24,99 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home></Home>,
       },
       {
-        path: '/room/:id',
-        element: <PrivateRoute><RoomDetails></RoomDetails></PrivateRoute>
-      }
+        path: "/room/:id",
+        element: (
+          <PrivateRoute>
+            <RoomDetails></RoomDetails>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
-    path: '/login',
-    element: <Login></Login>
+    path: "/login",
+    element: <Login></Login>,
   },
   {
-    path: '/signup',
-    element: <SignUp></SignUp>
+    path: "/signup",
+    element: <SignUp></SignUp>,
   },
   {
-    path: '/dashboard',
-    element: <PrivateRoute>
-      <DashboardLayout></DashboardLayout>
-    </PrivateRoute>,
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
-        element: <PrivateRoute>
-          <Statistics></Statistics>
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Statistics></Statistics>
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'add-room',
-        element: <PrivateRoute>
-          <HostRoute>
-            <AddRoom></AddRoom>
-          </HostRoute>
-        </PrivateRoute>
+        path: "add-room",
+        element: (
+          <PrivateRoute>
+            <HostRoute>
+              <AddRoom></AddRoom>
+            </HostRoute>
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'my-listings',
-        element: <PrivateRoute>
-          <HostRoute>
-            <MyListings></MyListings>
-          </HostRoute>
-        </PrivateRoute>
+        path: "my-listings",
+        element: (
+          <PrivateRoute>
+            <HostRoute>
+              <MyListings></MyListings>
+            </HostRoute>
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'manage-users',
-        element: <PrivateRoute>
-          <AdminRoute>
-            <ManageUsers></ManageUsers>
-          </AdminRoute>
-        </PrivateRoute>
+        path: "manage-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers></ManageUsers>
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'profile',
-        element: <PrivateRoute>
-          <Profile></Profile>
-        </PrivateRoute>
-      }
-    ]
-  }
+        path: "my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-bookings",
+        element: (
+          <PrivateRoute>
+            <HostRoute>
+              <ManageBookings></ManageBookings>
+            </HostRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
 ]);
